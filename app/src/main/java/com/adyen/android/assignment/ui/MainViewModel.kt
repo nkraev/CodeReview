@@ -34,7 +34,7 @@ class MainViewModel(
         }
 
         Event.PermissionGranted -> {
-            if (venuesUpdatesJob == null) {
+            if (venuesUpdatesJob?.isCancelled == true) {
                 collectVenues()
             } else {
                 // Do nothing
@@ -63,7 +63,7 @@ class MainViewModel(
                 }
 
                 _viewState.value = ViewState.Loading
-                val venues = getVenuesUseCase(newLocation)
+                val venues = getVenuesUseCase(newLocation).sortedBy { it.distance } // maybe possible sort on server side
                 _viewState.value = ViewState.VenueList(venues)
 
                 lastLocation = newLocation
