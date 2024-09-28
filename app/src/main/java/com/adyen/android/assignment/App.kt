@@ -52,7 +52,8 @@ private val appModule = module {
 
     factory {
         GetVenuesUseCase(
-            get()
+            api = get(),
+            dispatcherProvider = get()
         )
     }
 
